@@ -11,7 +11,7 @@ from sklearn.linear_model import SGDRegressor
 from sklearn.preprocessing import StandardScaler
 
 #change dir
-os.chdir('D:/Git/Machine-Learning-Specialization-Coursera/C1 - Supervised Machine Learning - Regression and Classification/week2/C1W2A1')
+#os.chdir('D:/Git/Machine-Learning-Specialization-Coursera/C1 - Supervised Machine Learning - Regression and Classification/week2/C1W2A1')
 
 x_train, y_train = load_data()
 
@@ -32,6 +32,7 @@ x_train, y_train = load_data()
 
 
 # Not use the scikit learn
+#----------------------------------------------------------
 def Compute_cost(x,y,w,b):
     m=x.shape[0]
 
@@ -78,43 +79,6 @@ def Gradient_descent(x,y,w_in,b_in,cost_function,gradient_function,alpha,num_ite
             print(f"Iteration {j:4}: Cost {float(J_history[-1]):8.2f} ")
     return w, b, J_history, w_history #return w and J,w history for graphing
 
-#Use scikit-learn
-#-----------LinearRegression------------------
-linear_model = LinearRegression()
-#X must be a 2-D Matrix
-linear_model.fit(x_train.reshape(-1,1),y_train)
-b = linear_model.intercept_
-w = linear_model.coef_
-#print(f"w={w:},b={b:0.2f}")
-#print(f"'manual' prediction: f_wb = wx+b : {1200*w + b}")
-y_pred = linear_model.predict(x_train.reshape(-1, 1))
-#print("Prediction on training set:", y_pred)
-X_test = np.array([[1200]])
-#print(f"Prediction for 1200 sqft house: ${linear_model.predict(X_test)[0]:0.2f}")
-#------------Norm-------------------------------s
-scaler = StandardScaler()
-x_norm = scaler.fit_transform(x_train.reshape(-1,1))
-print(f"Peak to Peak range by column in Raw        X:{np.ptp(x_train,axis=0)}")  
-print(f"Peak to Peak range by column in Normalized X:{np.ptp(x_norm,axis=0)}")
-
-sgdr = SGDRegressor(max_iter=1000)
-sgdr.fit(x_norm,y_train)
-print(sgdr)
-
-n_iter = sgdr.n_iter_
-w_num = sgdr.t_
-b_norm = sgdr.intercept_
-w_norm = sgdr.coef_
-
-print(f"model parameters:      w: {w_norm}, b:{b_norm}")
-
-y_pred_sgd = sgdr.predict(x_norm)
-
-y_pred = np.dot(x_norm, w_norm) + b_norm  
-
-##plot predictions
-
-
 """
 # Public tests
   
@@ -151,6 +115,45 @@ plt.ylabel('Profit in $10,000')
 plt.xlabel('Population of City in 10,000s')
 plt.show()
 """
+#----------------------------------------------------------------------------------------
+#Use scikit-learn
+#-----------LinearRegression------------------
+linear_model = LinearRegression()
+#X must be a 2-D Matrix
+linear_model.fit(x_train.reshape(-1,1),y_train)
+b = linear_model.intercept_
+w = linear_model.coef_
+#print(f"w={w:},b={b:0.2f}")
+#print(f"'manual' prediction: f_wb = wx+b : {1200*w + b}")
+y_pred = linear_model.predict(x_train.reshape(-1, 1))
+#print("Prediction on training set:", y_pred)
+X_test = np.array([[1200]])
+#print(f"Prediction for 1200 sqft house: ${linear_model.predict(X_test)[0]:0.2f}")
+#------------Norm-------------------------------s
+scaler = StandardScaler()
+x_norm = scaler.fit_transform(x_train.reshape(-1,1))
+print(f"Peak to Peak range by column in Raw        X:{np.ptp(x_train,axis=0)}")  
+print(f"Peak to Peak range by column in Normalized X:{np.ptp(x_norm,axis=0)}")
+
+sgdr = SGDRegressor(max_iter=1000)
+sgdr.fit(x_norm,y_train)
+print(sgdr)
+
+n_iter = sgdr.n_iter_
+w_num = sgdr.t_
+b_norm = sgdr.intercept_
+w_norm = sgdr.coef_
+
+print(f"model parameters:  w: {w_norm}, b:{b_norm}")
+
+y_pred_sgd = sgdr.predict(x_norm)
+
+y_pred = np.dot(x_norm, w_norm) + b_norm  
+
+##plot predictions
+
+
+
 
 
 
