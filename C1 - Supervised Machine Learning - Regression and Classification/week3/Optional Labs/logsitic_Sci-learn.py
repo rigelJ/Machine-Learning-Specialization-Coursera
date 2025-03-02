@@ -11,3 +11,4 @@ lr_model.fit(X,y)
 y_pred = lr_model.predict(X)
 print("Prediction on training set:", y_pred)
 print("Accuracy on training set:", lr_model.score(X, y))
+
